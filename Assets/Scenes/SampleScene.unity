@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 173075210}
   - component: {fileID: 173075209}
+  - component: {fileID: 173075211}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -215,6 +216,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &173075211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173075208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64385dcdc1b654098aedaf86b3bcaf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameLoopManager
 --- !u!1 &323770548
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +241,7 @@ GameObject:
   - component: {fileID: 323770551}
   - component: {fileID: 323770550}
   - component: {fileID: 323770549}
+  - component: {fileID: 323770554}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -250,6 +264,7 @@ MonoBehaviour:
   targetCore: {fileID: 905185437}
   speed: 3
   currentMovementType: 0
+  health: 50
 --- !u!136 &323770550
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -345,6 +360,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &323770554
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323770548}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +664,7 @@ GameObject:
   - component: {fileID: 499586831}
   - component: {fileID: 499586830}
   - component: {fileID: 499586829}
+  - component: {fileID: 499586834}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -644,6 +687,7 @@ MonoBehaviour:
   targetCore: {fileID: 905185437}
   speed: 3
   currentMovementType: 1
+  health: 50
 --- !u!136 &499586830
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -739,6 +783,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &499586834
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499586828}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e464710b58e2587e2b4476408068c923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core
-  maxHealth: 100
+  health: 100
 --- !u!65 &905185434
 BoxCollider:
   m_ObjectHideFlags: 0

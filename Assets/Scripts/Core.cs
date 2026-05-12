@@ -1,24 +1,24 @@
+using System;
 using UnityEngine;
-using System; 
+
 public class Core : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
-    public event Action<float> OnHealthChanged; 
-    public event Action OnCoreDestroyed;
-    public bool IsDead => currentHealth <= 0;
-    void Start()
+    public float health = 100f;
+    public bool IsDead => health <= 0; 
+    public static event Action<float> OnCoreHealthChanged;
+    public static event Action OnCoreDestroyed;
+
+    public void TakeDamage(float damageAmount)
     {
-        currentHealth = maxHealth;
-    }
-    public void TakeDamage(float amount)
-    {
-        if (IsDead) return;
-        currentHealth -= amount;
-        OnHealthChanged?.Invoke(currentHealth / maxHealth);
-        if (currentHealth <= 0)
+        if (IsDead) return; 
+
+        health -= damageAmount;
+        OnCoreHealthChanged?.Invoke(health);
+
+        if (IsDead) 
         {
             OnCoreDestroyed?.Invoke();
+            gameObject.SetActive(false); 
         }
     }
 }
