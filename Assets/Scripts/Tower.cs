@@ -5,6 +5,8 @@ public class Tower : MonoBehaviour
     private IWeapon currentWeapon;
     private float nextFireTime;
     
+    public float range = 15f;
+    
     [Header("Connections")]
     public Transform target; 
     public ProjectilePool pool;
@@ -12,11 +14,40 @@ public class Tower : MonoBehaviour
     void Start()
     {
         currentWeapon = new BasicWeapon();
+        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+    }
+
+    void UpdateTarget()
+    {
+        Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        float shortestDistance = Mathf.Infinity;
+        Enemy nearestEnemy = null;
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (!enemy.gameObject.activeInHierarchy || enemy.IsDead) continue;
+
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < shortestDistance)
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+        }
+
+        if (nearestEnemy != null && shortestDistance <= range)
+        {
+            target = nearestEnemy.transform;
+        }
+        else
+        {
+            target = null;
+        }
     }
 
     void Update()
     {
-        if (target != null && Time.time >= nextFireTime)
+        if (target != null && target.gameObject.activeInHierarchy && Time.time >= nextFireTime)
         {
             Shoot();
             nextFireTime = Time.time + currentWeapon.GetCooldown();
@@ -28,14 +59,19 @@ public class Tower : MonoBehaviour
 
     void Shoot()
     {
+        if (pool == null) return;
+
         GameObject bulletObj = pool.GetProjectile();
-        bulletObj.transform.position = transform.position;
-        
-        Projectile proj = bulletObj.GetComponent<Projectile>();
-        if (proj != null)
+        if (bulletObj != null)
         {
-            proj.damage = currentWeapon.GetDamage(); 
-            proj.FireAt(target);
+            bulletObj.transform.position = transform.position;
+            
+            Projectile proj = bulletObj.GetComponent<Projectile>();
+            if (proj != null)
+            {
+                proj.damage = currentWeapon.GetDamage(); 
+                proj.FireAt(target);
+            }
         }
     }
 
@@ -44,9 +80,16 @@ public class Tower : MonoBehaviour
         currentWeapon = new DamageUpgrade(currentWeapon);
         Debug.Log($"GÜÇLENDİRME: Hasar arttı! Yeni Hasar: {currentWeapon.GetDamage()}");
     }
+    
     public void ApplySpeedUpgrade()
     {
         currentWeapon = new SpeedUpgrade(currentWeapon);
         Debug.Log($"GÜÇLENDİRME: Hız arttı! Yeni Bekleme Süresi: {currentWeapon.GetCooldown()}");
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
