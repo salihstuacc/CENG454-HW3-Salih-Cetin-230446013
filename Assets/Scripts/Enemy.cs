@@ -11,6 +11,10 @@ public class Enemy : MonoBehaviour, IDamageable
     [Header("Health (Can Sistemi)")]
     public float health = 50f;
     public bool IsDead => health <= 0;
+    private void OnEnable()
+    {
+        health = 50f; 
+    }
 
     void Start()
     {
