@@ -99,4 +99,4 @@ public class Enemy : MonoBehaviour, IDamageable
         
         gameObject.SetActive(false); 
     }
-}//son kontrol
+}
