@@ -6,10 +6,12 @@ public class Tower : MonoBehaviour
     private float nextFireTime;
     
     public float range = 15f;
+    public float turnSpeed = 10f; 
     
     [Header("Connections")]
     public Transform target; 
     public ProjectilePool pool;
+    public Transform firePoint; 
 
     void Start()
     {
@@ -47,10 +49,22 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        if (target != null && target.gameObject.activeInHierarchy && Time.time >= nextFireTime)
+        if (target != null && target.gameObject.activeInHierarchy)
         {
-            Shoot();
-            nextFireTime = Time.time + currentWeapon.GetCooldown();
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0; 
+            
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
+            }
+
+            if (Time.time >= nextFireTime)
+            {
+                Shoot();
+                nextFireTime = Time.time + currentWeapon.GetCooldown();
+            }
         }
         
         if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyDamageUpgrade();
@@ -64,7 +78,8 @@ public class Tower : MonoBehaviour
         GameObject bulletObj = pool.GetProjectile();
         if (bulletObj != null)
         {
-            bulletObj.transform.position = transform.position;
+    
+            bulletObj.transform.position = (firePoint != null) ? firePoint.position : transform.position;
             
             Projectile proj = bulletObj.GetComponent<Projectile>();
             if (proj != null)

@@ -17,7 +17,8 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         if (target == null) return;
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        Vector3 aimPoint = target.position + new Vector3(0, 0.7f, 0);
+        transform.position = Vector3.MoveTowards(transform.position, aimPoint, speed * Time.deltaTime);
     }
     private void OnTriggerEnter(Collider other)
     {

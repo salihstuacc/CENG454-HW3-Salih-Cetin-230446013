@@ -32,7 +32,7 @@ public class PlacementManager : MonoBehaviour
                 newTower.pool = bulletPool;
             }
             
-            Debug.Log("Sisteme yeni bir kule eklendi ve bağlantıları yapıldı!");
+            Debug.Log("Yeni kule eklendi!");
         }
     }
 }

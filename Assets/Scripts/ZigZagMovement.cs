@@ -3,7 +3,7 @@ using UnityEngine;
 public class ZigZagMovement : IEnemyMovement
 {
     private float frequency = 4f;
-    private float magnitude = 9f;
+    private float magnitude = 6f;
     public void Move(Transform enemyTransform, Transform target, float speed)
     {
         if (target == null) return;
